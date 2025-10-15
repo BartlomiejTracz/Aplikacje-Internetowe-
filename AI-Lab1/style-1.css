@@ -1,3 +1,4 @@
+/* === Global settings === */
 @font-face {
     font-family: 'Humane Bold';
     src: url('../Humane-Bold.ttf') format('truetype');
@@ -5,148 +6,186 @@
     font-style: normal;
 }
 
+.top-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0b0b0b;
+  padding-top: 15px;
+}
+
+.top-logo img {
+  width: clamp(40px, 10vw, 80px);
+  height: auto;
+}
+
+/* === Nagłówek główny poza kontenerem === */
+.main-title {
+  font-family: 'Humane Bold', sans-serif;
+  font-size: clamp(2rem, 7vw, 5rem);
+  text-align: center;
+  color: #f3dede;
+  letter-spacing: 2px;
+  margin: 10px 0 30px;
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-        font-family: Arial, sans-serif;
-        background-color: #0b0b0b;
-        color: #222;
-        margin: 40px;
-        padding: 0 20px;
-        display: flex;
-        flex-direction: column;
+  margin: 0;
+  padding: 0;
+  font-family: "Helvetica", Arial, sans-serif;
+  background-color: #0b0b0b;
+  color: #f3dede;
 }
 
-img {
-        max-width: 100%;
-        height: auto;
-        display: block;
-        margin: 10px auto;
+.wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 
-footer {
-        text-align: center;
-        margin-top: 50px;
-        padding: 20px;
-        background: #222222;
-        color: #f3dede;
+/* === Header === */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 15px;
+  background-color: #1a1a1a;
+  padding: 10px 20px;
+  border-radius: 12px;
 }
 
-
-.toplinceimg {
-    max-width: 100%; 
-    height: clamp(0.5ex, 20ex, 3ex);
+.logo {
+  height: 50px;
+  width: auto;
 }
 
-/*clamp(min, preferred, max)*/
 .h1 {
-    margin-top: 10px;
-    font-family: 'Humane Bold', Arial, sans-serif;
-    font-size: clamp(3vw, 9vw, 18vw);
-    text-align: center;
-    color: #f3dede;
+  font-family: 'Humane Bold', Arial, sans-serif;
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  color: #f3dede;
 }
 
-.h2{
-    font-family: sans-serif;
-    font-size: clamp(1.5vw, 4.5vw, 9vw);
-    text-align: center;
-    color: #f3dede;
-    margin-top: 3vw;
-    margin-bottom: 40px;
+/* === Headings & Text === */
+.h2 {
+  font-size: clamp(1.4rem, 4vw, 2.5rem);
+  text-align: center;
+  color: #f3dede;
 }
 
 .h3 {
-    font-family: sans-serif;
-    font-size: clamp(1.1vw, 2.25, 4.5vw);
-    color: #db0400;
-    margin-top: 3vw;
-    margin-bottom: 10px;
-    text-align: center;
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  color: #db0400;
+  text-align: center;
 }
 
 .paragraf {
-    font-size: clamp(1vw, 3vw, 2.25vw);
-    line-height: 1.6;
-    color: #f3dede;
-    text-align: justify;
-    margin: 10px 0;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  line-height: 1.6;
+  text-align: justify;
+}
+
+/* === About Section === */
+.about {
+  background-color: #181818;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* === Projects Grid (3 columns) === */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.project-card {
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.project-card:hover {
+  transform: scale(1.03);
+}
+
+.project-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* === Scrollable Gallery === */
+.gallery-section {
+  background-color: #181818;
+  padding: 20px;
+  border-radius: 10px;
 }
 
 .gallery {
   display: flex;
-  gap: 10px; 
-  justify-content: center; 
-  align-items: center; 
-}
-
-.gallery {
-  display: flex;
-  flex-direction: row;   
-  justify-content: flex-start; 
-  gap: 10px;
+  gap: 15px;
   overflow-x: auto;
-  padding: 10px;
+  scroll-behavior: smooth;
   scrollbar-width: thin;
-  scroll-behavior: smooth; 
+  padding-bottom: 10px;
 }
-
 
 .gallery img {
-  max-width: 50vw;  
-  height: auto;
-  flex-shrink: 0;    
+  max-height: 250px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+/* === Buttons === */
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  background-color: #3c3636;
+  color: white;
+  text-decoration: none;
+  padding: 12px 24px;
   border-radius: 8px;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
-.line {
-    border-top: 2px solid #f3dede;
-    margin: 40px 0;
-    margin-top: auto;
-    margin-bottom: auto;
+.btn:hover {
+  background-color: #db0400;
+  transform: scale(1.05);
 }
 
-.list {
-    list-style-type: none; 
-    padding: 0;
-    display: flex;
-    gap: 20px; 
-    justify-content: center; 
+/* === Footer === */
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #222;
+  border-radius: 10px;
+  color: #f3dede;
+  font-size: 0.9rem;
 }
 
-.box {
-  display: flex;
-  align-items: center;     
-  justify-content: space-between; 
-  gap: 20px;               
+/* === Responsiveness === */
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+  }
+  .logo {
+    height: 40px;
+  }
 }
-
-.imgIE {
-  max-width: 100%;
-  height: clamp(5ex, 30ex, 15ex);
-}
-
-.box2 {
-  display: flex;
-  align-items: center;  
-  justify-content: flex-start; 
-  gap: 20px;            
-}
-
-.imgPLAK {
-  max-width: 100%;
-  height: clamp(5ex, 30ex, 15ex);
-}
-
-.box3 {
-  display: flex;
-  align-items: center;      
-  justify-content: flex-start; 
-  gap: 20px;                
-}
-
-.imgCar {
-  max-width: 150px;         
-  height: auto;             
-}
-
-
-
