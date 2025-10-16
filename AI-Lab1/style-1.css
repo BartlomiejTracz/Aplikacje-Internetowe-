@@ -1,25 +1,39 @@
-/* === Global settings === */
 @font-face {
-    font-family: 'Humane Bold';
-    src: url('../Humane-Bold.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
+  font-family: 'Humane Bold';
+  src: url('./Humane-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* * bo dla każdego elementu */
+* { 
+  box-sizing: border-box;
+  border: 1px solid red !important;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Helvetica", Arial, sans-serif;
+  background: url('ChatGPT Image 16 paź 2025, 09_36_45.png') center/cover no-repeat fixed;
+  color: #f3dede;
 }
 
 .top-logo {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #0b0b0b;
   padding-top: 15px;
+  background-color: transparent;
 }
 
+/* clamp: (min, val, max) - wybiera wartość pośrednią między min a max w zależności od val */
 .top-logo img {
   width: clamp(40px, 10vw, 80px);
   height: auto;
 }
 
-/* === Nagłówek główny poza kontenerem === */
+/* dzięki rem przeglądarka sama dostosuje wielkość fontu do ustawień użytkownika */
 .main-title {
   font-family: 'Humane Bold', sans-serif;
   font-size: clamp(2rem, 7vw, 5rem);
@@ -30,18 +44,6 @@
 }
 
 
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  font-family: "Helvetica", Arial, sans-serif;
-  background-color: #0b0b0b;
-  color: #f3dede;
-}
-
 .wrapper {
   max-width: 1200px;
   margin: 0 auto;
@@ -51,29 +53,7 @@ body {
   gap: 40px;
 }
 
-/* === Header === */
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 15px;
-  background-color: #1a1a1a;
-  padding: 10px 20px;
-  border-radius: 12px;
-}
 
-.logo {
-  height: 50px;
-  width: auto;
-}
-
-.h1 {
-  font-family: 'Humane Bold', Arial, sans-serif;
-  font-size: clamp(1.5rem, 5vw, 3rem);
-  color: #f3dede;
-}
-
-/* === Headings & Text === */
 .h2 {
   font-size: clamp(1.4rem, 4vw, 2.5rem);
   text-align: center;
@@ -81,9 +61,13 @@ body {
 }
 
 .h3 {
-  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-  color: #db0400;
+  font-size: clamp(1rem, 4vw, 1.6rem); 
+  color: #ffffff;
   text-align: center;
+  margin: 0.4em 0;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  hyphens: auto;
 }
 
 .paragraf {
@@ -92,14 +76,14 @@ body {
   text-align: justify;
 }
 
-/* === About Section === */
-.about {
+
+.about,
+.gallery-section {
   background-color: #181818;
   padding: 20px;
   border-radius: 10px;
 }
 
-/* === Projects Grid (3 columns) === */
 .project-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -125,13 +109,6 @@ body {
   margin-bottom: 10px;
 }
 
-/* === Scrollable Gallery === */
-.gallery-section {
-  background-color: #181818;
-  padding: 20px;
-  border-radius: 10px;
-}
-
 .gallery {
   display: flex;
   gap: 15px;
@@ -147,29 +124,16 @@ body {
   flex-shrink: 0;
 }
 
-/* === Buttons === */
-.buttons {
+.contact {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
+  gap: 12px;
+  text-align: center;
+  padding: 20px 24px; /* add horizontal padding so list isn't flush to edge */
 }
 
-.btn {
-  background-color: #3c3636;
-  color: white;
-  text-decoration: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  transition: background-color 0.3s, transform 0.2s;
-}
-
-.btn:hover {
-  background-color: #db0400;
-  transform: scale(1.05);
-}
-
-/* === Footer === */
 footer {
   text-align: center;
   padding: 20px;
@@ -179,12 +143,54 @@ footer {
   font-size: 0.9rem;
 }
 
-/* === Responsiveness === */
+.glass {
+  background: rgba(225, 217, 217, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(225, 217, 217, 0.2);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.glass:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
+}
+
+.social-list {
+  list-style-type: disc;
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  gap: 10px;
+  margin-top: 20px;
+  padding-left: 0;
+}
+
+.social-list li {
+  text-align: center;
+  font-size: clamp(1rem, 2.5vw, 1.1rem);
+}
+
+.social-list a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.social-list a:hover {
+  color: #e22a2a;
+  text-decoration: underline;
+}
+
 @media (max-width: 600px) {
   .header {
     flex-direction: column;
     align-items: center;
   }
+
   .logo {
     height: 40px;
   }
