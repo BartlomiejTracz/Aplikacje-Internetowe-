@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <title>Lista Zadań (To-Do List)</title>
+    <script src="js_lab2.js"></script> 
+    <link rel="stylesheet" href="styles_lab2.css">
+    
+</head>
+<body>
+
+    <header>
+        <h1 class ="header-title">Moja Lista Zadań</h1>
+        <label for="search-input">Wyszukaj zadanie:</label>
+        <input class="wyszukiwarka" type="text" id="search-input" name="search" placeholder="Wpisz słowo kluczowe...">
+        <hr>
+    </header>
+
+    <main>
+        <h2>Aktualne Zadania</h2>
+        <div id="task-list-container">
+            </div>
+        <hr>
+    </main>
+
+    <footer>
+        <h2>Dodaj Nowe Zadanie</h2>
+        <form id="add-task-form">
+            <div>
+                <label for="new-task-input">Treść Zadania:</label>
+                <input type="text" id="new-task-input" name="new-task" required>
+                <span id="validation-message" style="color: red;"></span> 
+            </div>
+            <br>
+            <div>
+                <label for="due-date-input">Data Wykonania:</label>
+                <input type="date" id="due-date-input" name="due-date"> 
+            </div>
+            <br>
+            <button type="submit">Zapisz Zadanie</button>
+        </form>
+    </footer>
+
+    
+</body>
+</html>

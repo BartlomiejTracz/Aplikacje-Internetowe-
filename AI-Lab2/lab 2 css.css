@@ -1,0 +1,181 @@
+/* Podstawowy wygląd podobny do style-1.css (kolory, glass, fonty, layout) */
+
+@font-face {
+  font-family: 'Humane Bold';
+  src: url('./Humane-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Tło strony */
+body {
+  font-family: "Helvetica", Arial, sans-serif;
+  background: linear-gradient(180deg, #0f1113 0%, #141617 60%), url('ChatGPT Image 16 paź 2025, 09_36_45.png') center/cover no-repeat fixed;
+  color: #f3dede;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+/* Główny nagłówek */
+.header-title {
+  font-family: 'Humane Bold', sans-serif;
+  font-size: clamp(1.8rem, 6vw, 3.2rem);
+  text-align: center;
+  color: #f3dede;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+/* Kontener główny (opcjonalny) */
+main, footer, header {
+  max-width: 900px;
+  margin: 0 auto 18px;
+  background: rgba(24,24,24,0.55);
+  border-radius: 12px;
+  padding: 18px;
+  border: 1px solid rgba(225,217,217,0.06);
+  box-shadow: 0 6px 30px rgba(0,0,0,0.45);
+}
+
+/* Wyszukiwarka */
+label[for="search-input"] {
+  display: block;
+  margin-bottom: 6px;
+  color: #e9dede;
+  font-weight: 600;
+}
+
+.wyszukiwarka, #new-task-input, #due-date-input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  color: #f3f3f3;
+  outline: none;
+  transition: box-shadow .15s, transform .08s;
+  font-size: 1rem;
+}
+
+.wyszukiwarka:focus, #new-task-input:focus, #due-date-input:focus {
+  box-shadow: 0 6px 20px rgba(0,0,0,0.6), 0 0 0 3px rgba(255,255,255,0.03);
+  transform: translateY(-1px);
+}
+
+/* Sekcja listy zadań */
+#task-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+  min-height: 80px;
+}
+
+/* Pojedyncze zadanie */
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.03);
+  color: #f3dede;
+  transition: transform .12s, box-shadow .12s;
+  position: relative;
+}
+
+.task-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+
+.task-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #e22a2a;
+}
+
+/* Tekst zadania i data */
+.task-text {
+  flex: 1;
+  font-size: 1rem;
+  word-break: break-word;
+}
+
+.task-text small {
+  color: #d6d6d6;
+  font-weight: 600;
+  margin-left: 6px;
+  font-size: 0.9rem;
+}
+
+/* Przycisk usuwania */
+.delete-btn {
+  color: #ff9b9b;
+  font-size: 1.05rem;
+  padding: 6px;
+  border-radius: 6px;
+  transition: background .12s, color .12s;
+}
+
+.delete-btn:hover {
+  background: rgba(226,42,42,0.08);
+  color: #ff4b4b;
+}
+
+/* Styl dla ukończonych zadań */
+.task-item input[type="checkbox"]:checked + .task-text {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+/* Formularz dodawania */
+footer h2 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #f3dede;
+}
+
+#add-task-form > div {
+  margin-bottom: 10px;
+}
+
+button[type="submit"] {
+  background: linear-gradient(180deg, #e22a2a, #b31a1a);
+  color: #fff;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  box-shadow: 0 6px 20px rgba(178,26,26,0.25);
+  transition: transform .08s, box-shadow .12s;
+}
+
+button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(178,26,26,0.32);
+}
+
+/* Walidacja */
+#validation-message {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 0.95rem;
+  color: #ffb3b3;
+}
+
+/* Responsywność */
+@media (max-width: 600px) {
+  .header-title { font-size: clamp(1.6rem, 8vw, 2.4rem); }
+  .task-text { font-size: 0.95rem; }
+  button[type="submit"] { width: 100%; }
+}
