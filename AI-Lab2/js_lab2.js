@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // === Selektory DOM ===
+    // odwołanie do elementów z HTML po id
     const taskListContainer = document.getElementById('task-list-container');
     const addTaskForm = document.getElementById('add-task-form');
     const newTaskInput = document.getElementById('new-task-input');
@@ -7,122 +7,133 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search-input');
     const validationMessage = document.getElementById('validation-message');
 
-    // === Funkcje Local Storage ===
+  
 
-    // Pobiera zadania z Local Storage
+   //odczytywanie i zapis w localStorage
     const getTasks = () => {
+        //pobranie zadania z localStorage i konwersja z JSON
         const tasksJson = localStorage.getItem('tasks');
         return tasksJson ? JSON.parse(tasksJson) : [];
     };
-
-    // Zapisuje zadania do Local Storage
+    
     const saveTasks = (tasks) => {
+        //zapisanie przekonwertowanego do JSON zadania w localStorage
         localStorage.setItem('tasks', JSON.stringify(tasks));
     };
 
-    // === Funkcje Renderer / DOM ===
-
-    // Generuje HTML dla pojedynczego zadania
+    //tworzenie / aktualizowanie elementów listy zadań
     const createTaskElement = (task, searchTerm = '') => {
+        //utworzenie elementu kontenera dla zadania
         const div = document.createElement('div');
         div.className = 'task-item';
-        // Używamy ID zadania do identyfikacji
         div.dataset.id = task.id; 
 
-        // Tekst zadania z wyróżnieniem wyszukiwanej frazy
+        //Podświetlanie wyszukiwanego terminu
         let taskText = task.text;
         if (searchTerm) {
             const regex = new RegExp(`(${searchTerm})`, 'gi');
-            // Zmieniamy kolor tła dopasowanej frazy
-            taskText = task.text.replace(regex, '<span style="background-color: yellow;">$1</span>');
+            //jeżeli tekst który wyszujujemy jest w tej tablicy to podświetlamt go 
+            taskText = task.text.replace(regex, '<span style="background-color: red;">$1</span>');
         }
 
-        // Dodanie daty wykonania, jeśli jest
+       //Dodanie daty
         const dueDateHtml = task.dueDate ? `<small> (Do: ${task.dueDate})</small>` : '';
 
-        // Składanie elementu listy
+       //Szablon HTML do zadania (checkbox, tekst, data, przycisk usuwania)
         div.innerHTML = `
             <input type="checkbox" ${task.completed ? 'checked' : ''}>
             <span class="task-text">${taskText}${dueDateHtml}</span>
             <span class="delete-btn" style="float: right; cursor: pointer;">&#128465;</span>
         `;
         
-        // Obsługa checkboxa (oznaczanie jako wykonane)
+        
         const checkbox = div.querySelector('input[type="checkbox"]');
         checkbox.addEventListener('change', () => toggleTaskCompleted(task.id));
         
-        // Obsługa usuwania
+        
         const deleteButton = div.querySelector('.delete-btn');
         deleteButton.addEventListener('click', () => deleteTask(task.id));
         
-        // Obsługa edycji (kliknięcie na tekst zadania)
+        
         const taskTextSpan = div.querySelector('.task-text');
         taskTextSpan.addEventListener('click', (e) => startEditing(e.currentTarget, task.id));
 
         return div;
     };
 
-    // Renderuje całą listę zadań
+   
     const renderTasks = (searchTerm = '') => {
+        //pobranie całej listy zzadań i wyczyszczenie kontenera
         taskListContainer.innerHTML = '';
         const tasks = getTasks();
         
-        // Filtrowanie zadań na podstawie wyszukiwania
+        //konwersja na małe litery i filtrowanie zadań
         const filteredTasks = tasks.filter(task => 
             task.text.toLowerCase().includes(searchTerm.toLowerCase())
         );
 
-        // Wyświetlanie filtrowanych/wszystkich zadań
+        //tworzenie i dodawanie elementów zadań do kontenera
+        //wyświetlanie tylko tych które przeszły filtr
         filteredTasks.forEach(task => {
             const taskElement = createTaskElement(task, searchTerm);
             taskListContainer.appendChild(taskElement);
         });
     };
 
-    // === Logika Biznesowa Zadań ===
-
-    // Dodawanie nowego zadania
+ 
     const addTask = (e) => {
         e.preventDefault();
 
+        //pobranie wartości z formularza
         const text = newTaskInput.value.trim();
         const dueDate = dueDateInput.value;
 
-        // Walidacja Danych Wejściowych
+       
+        validationMessage.textContent = ''; 
+
+        //walidacja długości tekstu
         if (text.length < 3 || text.length > 255) {
-            validationMessage.textContent = 'Zadanie musi mieć od 3 do 255 znaków!';
+            validationMessage.textContent = 'Treść zadania musi mieć od 3 do 255 znaków!';
             return;
         }
-        validationMessage.textContent = ''; // Czyści komunikat
 
+        //walidacja daty (czty została podana)
+        if (!dueDate) {
+            validationMessage.textContent = 'Musisz podać Datę Wykonania!';
+            return;
+        }
+       
+        //utworzenie nowego zadania i zapisanie go
         const tasks = getTasks();
         const newTask = {
-            // Unikatowe ID na podstawie timestamp
             id: Date.now(), 
             text,
             dueDate,
             completed: false
         };
 
+        //dodanie nowego zadania do listy i zapisanie
         tasks.push(newTask);
         saveTasks(tasks);
         
-        // Renderuje listę, aby pokazać nowe zadanie
+        //odświeżenie widoku zadań
         renderTasks(); 
         
-        // Czyści formularz
+        //wyczyszczenie formularza
         addTaskForm.reset(); 
     };
 
-    // Usuwanie zadania
+    //usuwanie zadania
     const deleteTask = (taskId) => {
+        //pobranie wsztstkich zadań
         let tasks = getTasks();
+        //tworzenie nowej tablicy bez usuwanego zadania
         tasks = tasks.filter(task => task.id !== taskId);
         saveTasks(tasks);
         renderTasks();
     };
     
-    // Zmiana statusu wykonania zadania
+    //zmiana statusu wykonanego zadania
     const toggleTaskCompleted = (taskId) => {
         const tasks = getTasks();
         const taskIndex = tasks.findIndex(task => task.id === taskId);
@@ -130,82 +141,106 @@ document.addEventListener('DOMContentLoaded', () => {
             tasks[taskIndex].completed = !tasks[taskIndex].completed;
             saveTasks(tasks);
         }
-        // Nie trzeba odświeżać całej listy, ale utrzymujemy checkbox w stanie zgodnym z LS
     };
     
-    // === Edycja Zadania ===
-
-    // Rozpoczyna edycję
+ 
     const startEditing = (spanElement, taskId) => {
+        //jeżeli pole input już istnieje, to nie robimy nic
         if (spanElement.querySelector('input[type="text"]')) {
-            // Już w trybie edycji, pomiń
             return; 
         }
-
-        // Pobieramy czysty tekst zadania (usuwamy ewentualne podświetlenia i datę)
+        //pobranie aktualnego tekstu zadania
         const currentTask = getTasks().find(t => t.id === taskId);
         if (!currentTask) return;
 
-        // Usuwamy datę z tekstu wyświetlanego w polu edycji
+        //pobranie surowego tekstu
         const rawText = currentTask.text;
 
+        //utworzenie pola input do edycji tekstu
         const input = document.createElement('input');
         input.type = 'text';
         input.value = rawText;
-        // Ustawienie max/min długości z walidacji
         input.maxLength = 255;
         input.minLength = 3; 
 
-        // Zastąpienie span'a inputem
+        //utworzenie pola input do edycji daty
+        const dateInput = document.createElement('input');
+        dateInput.type = 'date';
+        dateInput.value = currentTask.dueDate || '';
+
+        //przyciski zapisz/anuluj
+        const saveBtn = document.createElement('button');
+        saveBtn.type = 'button';
+        saveBtn.textContent = 'Zapisz';
+        saveBtn.style.marginLeft = '8px';
+
+        const cancelBtn = document.createElement('button');
+        cancelBtn.type = 'button';
+        cancelBtn.textContent = 'Anuluj';
+        cancelBtn.style.marginLeft = '6px';
+
+        //zamiana tekstu na pola input + przyciski
         spanElement.textContent = '';
         spanElement.appendChild(input);
+        spanElement.appendChild(dateInput);
+        spanElement.appendChild(saveBtn);
+        spanElement.appendChild(cancelBtn);
         input.focus();
 
-        // Obsługa kliknięcia poza polem (blur) - zapisuje zmiany
-        input.addEventListener('blur', () => saveEditing(input, taskId, currentTask.dueDate));
-
-        // Zapisanie zmian po naciśnięciu Enter
+        //Zapisanie edycji po naciśnięciu Enter w polu tekstowym
         input.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                input.blur(); // Wymusza zdarzenie blur i zapisuje
+                saveBtn.click();
             }
         });
+
+        //Obsługa klawisza Escape - anuluj
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                renderTasks(searchInput.value);
+            }
+        });
+        dateInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                renderTasks(searchInput.value);
+            }
+        });
+
+        saveBtn.addEventListener('click', () => saveEditing(input, taskId, dateInput.value));
+        cancelBtn.addEventListener('click', () => renderTasks(searchInput.value));
     };
 
-    // Zapisuje edytowane zadanie
+    //zapisanie edytowanego zadania
     const saveEditing = (inputElement, taskId, dueDate) => {
         const newText = inputElement.value.trim();
 
-        // Ponowna walidacja przed zapisem
+        //walidacja długości tekstu
         if (newText.length < 3 || newText.length > 255) {
             alert('Zadanie musi mieć od 3 do 255 znaków! Zmiany nie zostały zapisane.');
-            renderTasks(searchInput.value); // Odświeża, przywracając stary tekst
+            renderTasks(searchInput.value); 
             return;
         }
 
+        //aktualizacja zadania w localStorage
         const tasks = getTasks();
         const taskIndex = tasks.findIndex(task => task.id === taskId);
 
+        //jeżeli znaleziono zadanie, to aktualizujemy jego tekst i datę
         if (taskIndex !== -1) {
-            // Aktualizujemy tylko tekst
-            tasks[taskIndex].text = newText; 
+            tasks[taskIndex].text = newText;
+            tasks[taskIndex].dueDate = dueDate || '';
             saveTasks(tasks);
-            // Ponowne renderowanie z aktualnym wyszukiwanym tekstem (jeśli istnieje)
             renderTasks(searchInput.value); 
         }
     };
     
-    // === Inicjalizacja i Listenery ===
-
-    // Wczytanie zadań przy starcie
+    
     renderTasks(); 
 
-    // Obsługa dodawania zadania
+   
     addTaskForm.addEventListener('submit', addTask);
     
-    // Obsługa wyszukiwania
     searchInput.addEventListener('input', () => {
-        // Ponowne renderowanie z nową frazą (automatycznie filtruje i podświetla)
         renderTasks(searchInput.value); 
     });
 });
