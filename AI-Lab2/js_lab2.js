@@ -194,18 +194,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        //Obsługa klawisza Escape - anuluj
-        input.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                renderTasks(searchInput.value);
-            }
-        });
-        dateInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                renderTasks(searchInput.value);
-            }
-        });
-
         saveBtn.addEventListener('click', () => saveEditing(input, taskId, dateInput.value));
         cancelBtn.addEventListener('click', () => renderTasks(searchInput.value));
     };
@@ -239,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
    
     addTaskForm.addEventListener('submit', addTask);
-    
+
     searchInput.addEventListener('input', () => {
         renderTasks(searchInput.value); 
     });
