@@ -1,0 +1,120 @@
+/* Podstawowe ustawienia strony */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #eef2f3; /* Jasne tło */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding-top: 50px;
+}
+
+/* Sekcja wyszukiwania */
+#weather-search-params {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Stylowanie pola tekstowego */
+input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 200px;
+}
+
+/* Stylowanie przycisku */
+button {
+    padding: 10px 20px;
+    background-color: #4a90e2; /* Niebieski kolor */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #357abd; /* Ciemniejszy niebieski po najechaniu */
+}
+
+/* Kontener na wyniki */
+#wether-results-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 90%;
+    width: 100%;
+}
+
+.weather-row {
+    display: flex;
+    flex-direction: row; 
+    flex-wrap: wrap;     
+    justify-content: center; 
+    gap: 15px;           
+    width: 100%;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ccc; 
+}
+
+/* Pojedynczy kafelek z pogodą */
+.Weather-block {
+    background-color: white;
+    border-radius: 15px;
+    padding: 20px;
+    width: 220px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Delikatny cień */
+}
+
+/* Elementy wewnątrz kafelka */
+.weather-date {
+    font-size: 0.9em;
+    color: #888;
+    margin-bottom: 10px;
+}
+
+.weather-temperature {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #333;
+    margin: 10px 0;
+}
+
+.weather-temperature-feels-like {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.weather-icon {
+    width: 80px;
+    height: 80px;
+}
+
+.weather-description {
+    font-weight: 500;
+    text-transform: capitalize; /* Pierwsza litera duża */
+    color: #444;
+}
+
+/* Opcjonalnie: Nagłówek z datą nad rzędem */
+.day-header {
+    width: 100%;
+    text-align: left;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
